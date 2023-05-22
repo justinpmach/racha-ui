@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Button from './Button';
+import ButtonLink from './ButtonLink';
 import Center from './Center';
 
 const Bg = styled.div`
@@ -21,7 +22,7 @@ const Description = styled.p`
 
 const ColumnsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   img {
     max-width: 100%;
@@ -39,24 +40,24 @@ const ButtonsWrapper = styled.div`
   margin-top: 25px;
 `;
 
-export default function Featured() {
+export default function Featured({ product }) {
   return (
     <Bg>
       <Center>
         <ColumnsWrapper>
           <Column>
             <div>
-              <Title>Pro anywhere</Title>
-              <Description>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-              </Description>
+              <Title>{product.title}</Title>
+              <Description>{product.description}</Description>
               <ButtonsWrapper>
-                <Button outline white>
+                <ButtonLink
+                  href={'/products/' + product._id}
+                  outline={1}
+                  white={1}
+                >
                   Read More
-                </Button>
-                <Button primary>
+                </ButtonLink>
+                <Button primary='true'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
@@ -77,7 +78,10 @@ export default function Featured() {
             </div>
           </Column>
           <Column>
-            <img src='https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP858/mbp16-gray.png' />
+            <img
+              src='https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP858/mbp16-gray.png'
+              alt=''
+            />
           </Column>
         </ColumnsWrapper>
       </Center>
