@@ -4,7 +4,6 @@ export const CartContext = createContext({});
 
 export function CartContextProvider({ children }) {
   const local = typeof window !== 'undefined' ? window.localStorage : null;
-  const defaultProducts = local ? JSON.parse(local.getItem('cart')) : [];
   const [cartProducts, setCartProducts] = useState([]);
   useEffect(() => {
     if (cartProducts?.length > 0) {
@@ -32,9 +31,21 @@ export function CartContextProvider({ children }) {
     });
   }
 
+  function clearCart() {
+    console.log('cartProducts Before: ', cartProducts);
+    setCartProducts([]);
+    console.log('cartProducts After: ', cartProducts);
+  }
+
   return (
     <CartContext.Provider
-      value={{ cartProducts, setCartProducts, addProduct, removeProduct }}
+      value={{
+        cartProducts,
+        setCartProducts,
+        addProduct,
+        removeProduct,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>
