@@ -35,7 +35,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "components/CartContext.js",
-    "pages/cart.js"
+    "pages/cart.tsx"
   ],
   "exclude": [
     "node_modules"
