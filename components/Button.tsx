@@ -10,7 +10,7 @@ export const ButtonStyle = css`
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Kanit', sans-serif;
   svg {
     height: 16px;
     margin: 5px;
