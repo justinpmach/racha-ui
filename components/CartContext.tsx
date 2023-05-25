@@ -32,9 +32,7 @@ export function CartContextProvider({ children }) {
   }
 
   function clearCart() {
-    console.log('cartProducts Before: ', cartProducts);
     setCartProducts([]);
-    console.log('cartProducts After: ', cartProducts);
   }
 
   return (

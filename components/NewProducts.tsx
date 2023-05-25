@@ -20,7 +20,9 @@ export default function NewProducts({ products }: any) {
       <Title>New Arrivals</Title>
       <ProductsGrid>
         {products?.length &&
-          products.map((product: any) => <ProductBox {...product} />)}
+          products.map((product: any) => (
+            <ProductBox key={product} {...product} />
+          ))}
       </ProductsGrid>
     </Center>
   );

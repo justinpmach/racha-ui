@@ -30,9 +30,13 @@ export default async function handler(req, res) {
       const orderId = data.metadata.orderId;
       const paid = data.payment_status === 'paid';
       if (orderId && paid) {
-        Order.findByIdAndUpdate(orderId, {
-          paid: true,
-        });
+        await Order.findByIdAndUpdate(
+          orderId,
+          {
+            paid: true,
+          },
+          { new: true }
+        );
       }
       break;
     default:
@@ -47,4 +51,5 @@ export const config = {
 };
 
 // enough-reward-finest-bloom
+// cure-noble-smiles-sleek
 // acct_1NAhyZHnS3FEyqUj
