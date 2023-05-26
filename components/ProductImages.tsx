@@ -33,7 +33,7 @@ const BigImageWrapper = styled.div`
 
 export default function ProductImages({ images }) {
   const [activeImage, setActiveImage] = useState(images?.[0]);
-  console.log('images: ', images);
+  // console.log('images: ', images);
   return (
     <>
       <BigImageWrapper>
