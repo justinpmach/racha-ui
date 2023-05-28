@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { CartContext } from './CartContext';
-import Button from '@/components/Button';
+import ButtonStyle from '@/components/Button';
 import CartIcon from '@/components/icons/CartIcon';
+import FlyingButton from '@/components/FlyingButton';
+import { primary } from '@/lib/colors';
 
 const ProductWrapper = styled.div``;
 
@@ -77,15 +79,9 @@ export default function ProductBox({
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price>${price}</Price>
-          <Button
-            onClick={() => addProduct(_id)}
-            block='true'
-            primary='true'
-            outline='true'
-          >
-            {/* <CartIcon /> */}
+          <FlyingButton _id={_id} src={images?.[0]}>
             Add to Cart
-          </Button>
+          </FlyingButton>
         </PriceRow>
       </ProductInfoBox>
     </ProductWrapper>
