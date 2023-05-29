@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 
 const StyledNav = styled.nav`
   ${props =>
-    props.mobile
+    props.mobileNavActive
       ? `
   display: block;
 `
@@ -99,7 +99,7 @@ export default function Header() {
       <Center>
         <Wrapper>
           <Logo href={'/'}>Sriracha DFS</Logo>
-          <StyledNav mobile={mobileNavActive.toString()}>
+          <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={'/'}>Home</NavLink>
             <NavLink href={'/products'}>All Products</NavLink>
             <NavLink href={'/categories'}>Categories</NavLink>
