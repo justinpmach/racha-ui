@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import Link from 'next/link';
-import { useContext } from 'react';
-import { CartContext } from './CartContext';
 import FlyingButton from '@/components/FlyingButton';
 
-const ProductWrapper = styled.div``;
+const ProductWrapper = styled.div`
+  button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+`;
 
 const WhiteBox = styled(Link)`
   background-color: #fff;
