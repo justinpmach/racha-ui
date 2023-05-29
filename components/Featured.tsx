@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
-import { CartContext } from '@/components/CartContext';
-import Button from '@/components/Button';
 import ButtonLink from '@/components/ButtonLink';
 import Center from '@/components/Center';
 import CartIcon from '@/components/icons/CartIcon';
 import FlyingButton from '@/components/FlyingButton';
+import { RevealWrapper } from 'next-reveal';
 
 const Bg = styled.div`
   background-color: #222;
@@ -31,7 +29,7 @@ const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
-  img {
+  img.main {
     max-width: 100%;
     max-height: 200px;
     display: block;
@@ -65,39 +63,43 @@ const ButtonsWrapper = styled.div`
 `;
 
 export default function Featured({ product }: any) {
-  const { addProduct } = useContext(CartContext);
   return (
     <Bg>
       <Center>
         <ColumnsWrapper>
           <Column>
             <div>
-              <Title>{product.title}</Title>
-              <Description>{product.description}</Description>
-              <ButtonsWrapper>
-                <ButtonLink
-                  href={'/product/' + product._id}
-                  outline={1}
-                  white={1}
-                >
-                  Read More
-                </ButtonLink>
-                <FlyingButton
-                  white='true'
-                  _id={product._id}
-                  src={product.images?.[0]}
-                >
-                  <CartIcon />
-                  Add to Cart
-                </FlyingButton>
-              </ButtonsWrapper>
+              <RevealWrapper origin='left' delay={0}>
+                <Title>{product.title}</Title>
+                <Description>{product.description}</Description>
+                <ButtonsWrapper>
+                  <ButtonLink
+                    href={'/product/' + product._id}
+                    outline={1}
+                    white={1}
+                  >
+                    Read More
+                  </ButtonLink>
+                  <FlyingButton
+                    white='true'
+                    _id={product._id}
+                    src={product.images?.[0]}
+                  >
+                    <CartIcon />
+                    Add to Cart
+                  </FlyingButton>
+                </ButtonsWrapper>
+              </RevealWrapper>
             </div>
           </Column>
           <Column>
-            <img
-              src='https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP858/mbp16-gray.png'
-              alt=''
-            />
+            <RevealWrapper delay={0}>
+              <img
+                className={'main'}
+                src='https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP858/mbp16-gray.png'
+                alt=''
+              />
+            </RevealWrapper>
           </Column>
         </ColumnsWrapper>
       </Center>

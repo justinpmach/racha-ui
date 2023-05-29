@@ -12,7 +12,7 @@ export const ButtonStyle = css`
   text-decoration: none;
   font-family: 'Kanit', sans-serif;
   font-weight 500;
-  font-size: 16px;
+  font-size: 15px;
   svg {
     height: 16px;
     margin: 5px;
