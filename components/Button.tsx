@@ -11,6 +11,8 @@ export const ButtonStyle = css`
   align-items: center;
   text-decoration: none;
   font-family: 'Kanit', sans-serif;
+  font-weight 500;
+  font-size: 16px;
   svg {
     height: 16px;
     margin: 5px;
@@ -54,31 +56,31 @@ export const ButtonStyle = css`
     `}
 
 ${props =>
-    props.primary &&
-    !props.outline &&
-    css`
-      background-color: ${primary};
-      border: 1px solid ${primary};
-      color: #fff;
-    `}
+  props.primary &&
+  !props.outline &&
+  css`
+    background-color: ${primary};
+    border: 1px solid ${primary};
+    color: #fff;
+  `}
 ${props =>
-    props.primary &&
-    props.outline &&
-    css`
-      background-color: transparent;
-      border: 1px solid ${primary};
-      color: ${primary};
-    `}
+  props.primary &&
+  props.outline &&
+  css`
+    background-color: transparent;
+    border: 1px solid ${primary};
+    color: ${primary};
+  `}
 
 ${props =>
-    props.size === 'l' &&
-    css`
-      font-size: 1.2rem;
-      padding: 10px 20px;
-      svg {
-        height: 20px;
-      }
-    `}
+  props.size === 'l' &&
+  css`
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    svg {
+      height: 20px;
+    }
+  `}
 `;
 
 export const StyledButton = styled.button`
