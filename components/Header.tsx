@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Center from '@/components/Center';
 import { CartContext } from '@/components/CartContext';
@@ -7,6 +7,8 @@ import MenuBarsIcon from './icons/MenuBars';
 
 const StyledHeader = styled.header`
   background-color: #222;
+  position: sticky;
+  top: 0;
 `;
 
 const Logo = styled(Link)`
