@@ -3,6 +3,9 @@ import Featured from '@/components/Featured';
 import { Product } from '@/models/Product';
 import { mongooseConnect } from '@/lib/mongoose';
 import NewProducts from '@/components/NewProducts';
+import { WishedProduct } from '@/models/WishedProduct';
+// import { getServerSession } from 'next-auth/next';
+// import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 export default function HomePage({ featuredProduct, newProducts }: any) {
   return (
@@ -14,7 +17,7 @@ export default function HomePage({ featuredProduct, newProducts }: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const featuredProductId = '6466b701dfb008546332aa63';
   await mongooseConnect();
   const featuredProduct = await Product.findById(featuredProductId);
@@ -22,6 +25,8 @@ export async function getServerSideProps() {
     sort: { _id: -1 },
     limit: 10,
   });
+  // console.log(getServerSession(context.request, context.response, authOptions));
+  const wishedNewProducts = await WishedProduct.find();
   return {
     props: {
       featuredProduct: JSON.parse(JSON.stringify(featuredProduct)),
