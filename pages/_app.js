@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import { CartContextProvider } from '@/components/CartContext';
-import Head from 'next/head';
+import { SessionProvider } from 'next-auth/react';
 
 const GlobalStyles = createGlobalStyle`
 body{
@@ -9,15 +9,25 @@ body{
   margin: 0;
   font-family: 'Kanit', sans-serif;
 }
+hr{
+  display: block;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
 `;
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <>
       <GlobalStyles />
-      <CartContextProvider>
-        <Component {...pageProps} />
-      </CartContextProvider>
+      <SessionProvider session={session}>
+        <CartContextProvider>
+          <Component {...pageProps} />
+        </CartContextProvider>
+      </SessionProvider>
     </>
   );
 }
