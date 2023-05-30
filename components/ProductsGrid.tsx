@@ -11,13 +11,17 @@ const StyledProductsGrid = styled.div`
   }
 `;
 
-export default function ProductsGrid({ products }) {
+export default function ProductsGrid({ products, wishedProducts = [] }: any) {
   return (
     <StyledProductsGrid>
       {products?.length &&
         products.map((product: any, index: any) => (
           <RevealWrapper delay={index * 50}>
-            <ProductBox key={product._id} {...product} />
+            <ProductBox
+              key={product._id}
+              {...product}
+              wished={wishedProducts.includes(product._id)}
+            />
           </RevealWrapper>
         ))}
     </StyledProductsGrid>

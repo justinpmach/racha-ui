@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import FlyingButton from '@/components/FlyingButton';
 import HeartOutlineIcon from './icons/HeartOutline';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HeartSolidIcon from './icons/HeartSolid';
+import axios from 'axios';
 
 const ProductWrapper = styled.div`
   button {
@@ -92,14 +93,29 @@ export default function ProductBox({
   description,
   price,
   images,
+  wished = false,
+  onRemoveFromWishlist = () => {},
 }: any) {
   const url = '/product/' + _id;
-  const [isWished, setIsWished] = useState(false);
+  const [isWished, setIsWished] = useState(wished);
+
+  // useEffect(() => {
+  //   console.log('wished changed');
+  // }, [isWished]);
 
   function addToWishlist(e) {
     e.preventDefault();
     e.stopPropagation();
-    setIsWished(prev => !prev);
+    const nextValue = !isWished;
+    if (nextValue === false && onRemoveFromWishlist) {
+      onRemoveFromWishlist(_id);
+    }
+    axios
+      .post('/api/wishlist', {
+        product: _id,
+      })
+      .then(() => {});
+    setIsWished(nextValue);
   }
 
   return (

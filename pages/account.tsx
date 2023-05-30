@@ -10,17 +10,27 @@ import { RevealWrapper } from 'next-reveal';
 import WhiteBox from '@/components/WhiteBox';
 import Input from '@/components/Input';
 import Spinner from '@/components/Spinner';
+import ProductBox from '@/components/ProductBox';
 
 const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 40px;
   margin: 40px 0;
+  p {
+    margin: 5px;
+  }
 `;
 
 const CityHolder = styled.div`
   display: flex;
   gap: 5px;
+`;
+
+const WishedProductsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
 `;
 
 export default function AccountPage() {
@@ -31,7 +41,9 @@ export default function AccountPage() {
   const [postalCode, setPostalCode] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
   const [country, setCountry] = useState('');
-  const [loaded, setLoaded] = useState(false);
+  const [addressLoaded, setAddressLoaded] = useState(true);
+  const [wishlistLoaded, setWishlistLoaded] = useState(true);
+  const [wishedProducts, setWishedProducts] = useState([]);
   async function logout() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -46,7 +58,13 @@ export default function AccountPage() {
     axios.put('/api/address', data);
   }
 
+  // When page mounts (page loads) grab all info from api
   useEffect(() => {
+    if (!session) {
+      return;
+    }
+    setAddressLoaded(false);
+    setWishlistLoaded(true);
     axios.get('/api/address').then(response => {
       setName(response.data?.name);
       setEmail(response.data?.email);
@@ -54,9 +72,20 @@ export default function AccountPage() {
       setPostalCode(response.data?.postalCode);
       setStreetAddress(response.data?.streetAddress);
       setCountry(response.data?.country);
-      setLoaded(true);
+      setAddressLoaded(true);
     });
-  }, []);
+    // grab all wished items upon page mount
+    axios.get('/api/wishlist').then(response => {
+      setWishedProducts(response.data.map(wp => wp.product));
+      setWishlistLoaded(true);
+    });
+  }, [session]);
+
+  function productRemovedFromWishlist(idToRemove) {
+    setWishedProducts(products => {
+      return [...products.filter(p => p._id.toString() !== idToRemove)];
+    });
+  }
 
   return (
     <>
@@ -67,15 +96,38 @@ export default function AccountPage() {
             <RevealWrapper delay={0}>
               <WhiteBox>
                 <h2>Wishlist</h2>
+                {!wishlistLoaded && <Spinner fullWidth={true} />}
+                {wishlistLoaded && (
+                  <>
+                    <WishedProductsGrid>
+                      {wishedProducts.length > 0 &&
+                        wishedProducts.map(wp => (
+                          <ProductBox
+                            key={wp._id}
+                            {...wp}
+                            wished={true}
+                            onRemoveFromWishlist={productRemovedFromWishlist}
+                          />
+                        ))}
+                    </WishedProductsGrid>
+                    {wishedProducts.length === 0 && (
+                      <>
+                        {session && <p>Your wishlist is empty.</p>}
+                        {!session && (
+                          <p>Login to add products to your wishlist.</p>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
               </WhiteBox>
             </RevealWrapper>
           </div>
           <div>
             <RevealWrapper delay={100}>
               <WhiteBox>
-                <h2>Account Details</h2>
-                {!loaded && <Spinner fullWidth={true} />}
-                {loaded && (
+                <h2>{session ? 'Account details' : 'Login'}</h2>
+                {!addressLoaded && session && (
                   <>
                     <Input
                       type='text'
@@ -134,7 +186,7 @@ export default function AccountPage() {
                 )}
                 {!session && (
                   <Button primary={1} onClick={login}>
-                    Login
+                    Login with Google
                   </Button>
                 )}
               </WhiteBox>
