@@ -1,5 +1,6 @@
 import { mongooseConnect } from '@/lib/mongoose';
 import { Product } from '@/models/Product';
+import { Setting } from '@/models/Setting';
 import { Order } from '@/models/Order';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
@@ -42,6 +43,8 @@ export default async function handler(req, res) {
   }
 
   const session = await getServerSession(req, res, authOptions);
+  const shippingFeeSetting = await Setting.findOne({ name: 'shippingFee' });
+  const shippingFeeCents = parseInt(shippingFeeSetting.value || '0') * 100;
 
   const orderDoc = await Order.create({
     line_items,
@@ -62,6 +65,15 @@ export default async function handler(req, res) {
     success_url: process.env.PUBLIC_URL + '/cart?success=1',
     cancel_url: process.env.PUBLIC_URL + '/cart?canceled=1',
     metadata: { orderId: orderDoc._id.toString() },
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          display_name: 'shipping fee',
+          type: 'fixed_amount',
+          fixed_amount: { amount: shippingFeeCents, currency: 'USD' },
+        },
+      },
+    ],
   });
 
   res.json({
