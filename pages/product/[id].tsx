@@ -1,10 +1,10 @@
-import Button from '@/components/Button';
 import { CartContext } from '@/components/CartContext';
 import Center from '@/components/Center';
 import FlyingButton from '@/components/FlyingButton';
 import Header from '@/components/Header';
 import CartIcon from '@/components/icons/CartIcon';
 import ProductImages from '@/components/ProductImages';
+import ProductReviews from '@/components/ProductReviews';
 import Title from '@/components/Title';
 import WhiteBox from '@/components/WhiteBox';
 import { mongooseConnect } from '@/lib/mongoose';
@@ -62,6 +62,7 @@ export default function ProductPage({ product }) {
             </PriceRow>
           </div>
         </ColWrapper>
+        <ProductReviews product={product} />
       </Center>
     </>
   );
