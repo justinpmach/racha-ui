@@ -62,7 +62,7 @@ export default function CategoriesPage({
       <Center>
         {/* <Title>All Categories</Title> */}
         {mainCategories.map(cat => (
-          <CategoryWrapper key={cat}>
+          <CategoryWrapper key={cat._id}>
             <CategoryTitle>
               <h2>{cat.name}</h2>
               <div>
@@ -71,7 +71,7 @@ export default function CategoriesPage({
             </CategoryTitle>
             <CategoryGrid>
               {categoriesProducts?.[cat._id].map((p: any, index: any) => (
-                <RevealWrapper delay={index * 50}>
+                <RevealWrapper key={cat._id} delay={index * 50}>
                   <ProductBox
                     key={p}
                     {...p}
@@ -111,8 +111,6 @@ export async function getServerSideProps(context) {
     allFetchedProductsId.push(...products.map(p => p._id.toString()));
     categoriesProducts[mainCat._id] = products;
   }
-  // Object.values(categoriesProducts).map(catProducts =>
-  // );
 
   const session = await getServerSession(context.req, context.res, authOptions);
   const wishedProducts = session?.user

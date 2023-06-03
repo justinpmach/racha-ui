@@ -124,7 +124,7 @@ export default function AccountPage() {
                     {ordersLoaded && (
                       <div>
                         {orders.length > 0 &&
-                          orders.map(o => <OrderSingle key={o} {...o} />)}
+                          orders.map(o => <OrderSingle key={o._id} {...o} />)}
                       </div>
                     )}
                   </>
